@@ -1,0 +1,33 @@
+# See more at https://istio.io/docs/reference/config/networking/destination-rule/
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: books-dest-rule
+spec:
+  host: books-svc.default.svc.cluster.local
+  subsets:
+  - name: books-destrule1-subset1
+    labels:
+      app: booksapp
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: electronics-dest-rule
+spec:
+  host: electronics-svc.default.svc.cluster.local
+  subsets:
+  - name: electronics-destrule1-subset1
+    labels:
+      app: electronicsapp
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: retail-dest-rule
+spec:
+  host: retail-svc.default.svc.cluster.local
+  subsets:
+  - name: retail-destrule1-subset1
+    labels:
+      app: retailapp

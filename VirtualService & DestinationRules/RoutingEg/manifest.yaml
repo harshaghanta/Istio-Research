@@ -1,0 +1,144 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: books-config-map
+data:
+  index.html: |
+    <h1>Book Application</h1>
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: books-deployment
+spec:
+  selector:
+    matchLabels:
+      app: booksapp
+  template:
+    metadata:
+      labels:
+        app: booksapp
+    spec:
+      containers:
+      - name: booksappcontainer
+        image: nginx
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: books-app-volume
+          mountPath:  /usr/share/nginx/html
+      volumes:
+      - name: books-app-volume
+        configMap:
+          name: books-config-map
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: books-svc
+spec:
+  selector:
+    app: booksapp
+  ports:
+  - port: 80
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: electronics-config-map
+data:
+  index.html: |
+    <h1>Electronic Application</h1>
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: electronics-deployment
+spec:
+  selector:
+    matchLabels:
+      app: electronicsapp
+  template:
+    metadata:
+      labels:
+        app: electronicsapp
+    spec:
+      containers:
+      - name: electronicsappcontainer
+        image: nginx
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: electronics-app-volume
+          mountPath:  /usr/share/nginx/html
+      volumes:
+      - name: electronics-app-volume
+        configMap:
+          name: electronics-config-map
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: electronics-svc
+spec:
+  selector:
+    app: electronicsapp
+  ports:
+  - port: 80
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: retail-config-map
+data:
+  index.html: |
+    <h1>Retail Application</h1>
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: retail-deployment
+spec:
+  selector:
+    matchLabels:
+      app: retailapp
+  template:
+    metadata:
+      labels:
+        app: retailapp
+    spec:
+      containers:
+      - name: retailappcontainer
+        image: nginx
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: retail-app-volume
+          mountPath:  /usr/share/nginx/html
+      volumes:
+      - name: retail-app-volume
+        configMap:
+          name: retail-config-map
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: retail-svc
+spec:
+  selector:
+    app: retailapp
+  ports:
+  - port: 80

@@ -1,0 +1,34 @@
+# See more at https://istio.io/docs/reference/config/networking/virtual-service/
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: books-virtservice
+spec:
+  hosts:
+  - retail-svc.default.svc.cluster.local
+  http:
+  - name: 'books-route1'
+    match:
+    - uri:
+        prefix: "/books"
+    rewrite:
+      uri: "/"
+    route:
+    - destination:
+        host: books-svc.default.svc.cluster.local
+        subset: books-destrule1-subset1
+  - name: 'electronics-route1'
+    match:
+    - uri:
+        prefix: "/electronics"
+    rewrite:
+      uri: "/"
+    route:
+    - destination:
+        host: electronics-svc.default.svc.cluster.local
+        subset: electronics-destrule1-subset1
+  - name: "retail-route1"
+    route:
+    - destination:
+        host: retail-svc.default.svc.cluster.local
+        subset: retail-destrule1-subset1
