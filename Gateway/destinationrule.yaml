@@ -1,0 +1,16 @@
+# See more at https://istio.io/docs/reference/config/networking/destination-rule/
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: bookapp-destinationrule
+spec:
+  host: bookapp-svc.default.svc.cluster.local
+  subsets:
+  - name: bookapp-subset-v1
+    labels:
+      app: bookapp
+      version: v1
+  - name: bookapp-subset-v2
+    labels:
+      app: bookapp
+      version: v2
