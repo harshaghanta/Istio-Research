@@ -1,0 +1,39 @@
+# See more at https://istio.io/docs/reference/config/networking/virtual-service/
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: app3-virtualservice
+spec:
+  hosts:
+  - app3-svc.default.svc.cluster.local
+  http:
+  - name: 'app3-routes'
+    match:
+    - uri:
+        prefix: '/app3'
+    rewrite:
+      uri: "/"
+    route:    
+    - destination:
+        host: app3-svc.default.svc.cluster.local
+        subset: app3-v1-subset
+  - name: 'app4-routes'
+    match:
+    - uri:
+        prefix: '/app4'
+    rewrite:
+      uri: "/"
+    route:    
+    - destination:
+        host: app4-svc.default.svc.cluster.local
+        subset: app4-v1-subset
+  - name: 'app5-routes'
+    match:
+    - uri:
+        prefix: '/app5'
+    rewrite:
+      uri: "/"
+    route:    
+    - destination:
+        host: app5-svc.default.svc.cluster.local
+        subset: app5-v1-subset

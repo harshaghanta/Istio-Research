@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app4-configmap
+data:
+  index.html : |
+    <h1> App4 </h1>
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app4-deploy
+spec:
+  selector:
+    matchLabels:
+      app: app4
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: app4
+        version: v1
+    spec:
+      containers:
+      - name: app4
+        image: nginx
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name:  app4-volume
+          mountPath:  /usr/share/nginx/html
+      volumes:
+      - name:  app4-volume
+        configMap:
+          name: app4-configmap
+        

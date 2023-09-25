@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: app4-svc
+spec:
+  selector:
+    app: app4
+  ports:
+  - name: http-default
+    port: 80

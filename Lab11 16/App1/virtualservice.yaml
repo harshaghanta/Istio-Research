@@ -1,0 +1,19 @@
+# See more at https://istio.io/docs/reference/config/networking/virtual-service/
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: app1-virtualservice
+spec:
+  hosts:
+  - app1-svc.default.svc.cluster.local
+  http:
+  - name: 'app1-routes'
+    route:
+    - destination:
+        host: app1-svc.default.svc.cluster.local
+        subset: app1-v1-subset
+      weight: 90
+    - destination:
+        host: app2-svc.default.svc.cluster.local
+        subset: app2-v1-subset
+      weight: 10
